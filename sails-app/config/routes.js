@@ -36,7 +36,8 @@ module.exports.routes = {
     view: 'homepage'
   },
 
-  'get /available': 'SystemController.available'
+  'get /available': 'SystemController.available',
+  'get /search': 'BookController.search'
 
   /***************************************************************************
   *                                                                          *

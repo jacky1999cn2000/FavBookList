@@ -4,10 +4,18 @@
 'use strict';
 
 var co = require('co'),
- 	  request = require("co-request");
+ 	  request = require("co-request"),
+    cheerio = require('cheerio');;
 
 var BookService = {
 
+  /*
+  * SERVICE METHODS
+  */
+
+  /*
+  * search book via douban api
+  */
   search: function(query) {
     return co(function* (){
 
@@ -26,7 +34,7 @@ var BookService = {
         result.prevStart = resObj.start - 20;
       }
 
-      let keys = ['images','alt','id','title','author','isbn10','isbn13'];
+      let keys = ['images','alt','id','title','author','isbn13'];
       result.books = [];
 
       if(resObj.books && resObj.books.length > 0){
@@ -38,6 +46,42 @@ var BookService = {
     });
   },
 
+  /*
+  * scrap readfree.me to get book link for download
+  */
+  readfree: function(query) {
+    return co(function* (){
+
+      let url = 'http://readfree.me/search' + '?' + BookService.serialize(query);;
+      let response = yield BookService.makeRequest(url);
+      let result = {};
+
+      if(response.statusCode == 200){
+        let $ = cheerio.load(response.body);
+        let item = $('#container > ul > li > div > div:nth-child(1) > div:nth-child(2)');
+        let url = item.children('a').attr('href');
+
+        if(typeof url === 'undefined'){
+          result.status = 'notFound';
+        }else{
+          result.status = 'http://readfree.me' + url;
+        }
+      }else{
+        result.status = 'notFound';
+      }
+
+      return result;
+    });
+  },
+
+
+  /*
+  * UTILITY METHODS
+  */
+
+  /*
+  * filter out unnecessary keys from an object
+  */
   filterOutUnnecessaryKeys: function(obj) {
 		let keys = ['images','alt','id','title','author','isbn10','isbn13'];
 		let result = {};
@@ -47,6 +91,9 @@ var BookService = {
 		return result;
 	},
 
+  /*
+  * serialize query parameters
+  */
   serialize: function(obj) {
     var str = [];
     for (var p in obj)
@@ -57,13 +104,17 @@ var BookService = {
   },
 
   /*
-  * Make Request and Parse Response
+  * make request and parse response
   */
   makeRequest: function(url){
     return co(function* (){
       let response = yield request(url);
-      let resObj = JSON.parse(response.body);
-      return resObj;
+      try{
+        let resObj = JSON.parse(response.body);
+        return resObj;
+      }catch(err){
+        return response;
+      }
     });
   }
 

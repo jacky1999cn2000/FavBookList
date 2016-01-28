@@ -5,6 +5,7 @@
   "description": "a Sails application",
   "keywords": [],
   "dependencies": {
+    "cheerio": "^0.19.0",
     "co": "^4.6.0",
     "co-request": "^1.0.0",
     "ejs": "~0.8.4",

@@ -37,7 +37,8 @@ module.exports.routes = {
   },
 
   'get /available': 'SystemController.available',
-  'get /search': 'BookController.search'
+  'get /search': 'BookController.search',
+  'get /readfree': 'BookController.readfree'
 
   /***************************************************************************
   *                                                                          *

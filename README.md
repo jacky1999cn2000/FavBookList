@@ -15,4 +15,4 @@
 ### TRIVIA
 
 * MongoDB
-⋅⋅* [通过brew安装](https://docs.mongodb.org/manual/tutorial/install-mongodb-on-os-x/)
+ * [通过brew安装](https://docs.mongodb.org/manual/tutorial/install-mongodb-on-os-x/)

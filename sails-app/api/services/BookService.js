@@ -1,11 +1,11 @@
 /**
- * ChallengeService
+ * BookService
  */
 'use strict';
 
 var co = require('co'),
  	  request = require("co-request"),
-    cheerio = require('cheerio');;
+    cheerio = require('cheerio');
 
 var BookService = {
 

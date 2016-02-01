@@ -38,7 +38,10 @@ module.exports.routes = {
 
   'get /available': 'SystemController.available',
   'get /search': 'BookController.search',
-  'get /readfree': 'BookController.readfree'
+  'get /readfree': 'BookController.readfree',
+
+  'post /register': 'AuthController.register',
+  'post /login': 'AuthController.login'
 
   /***************************************************************************
   *                                                                          *

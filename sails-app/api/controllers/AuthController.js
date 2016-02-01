@@ -34,19 +34,6 @@ module.exports = {
     co(function* (){
       let result = yield AuthService.login(req, res);
       return result;
-      // let userId = req.param('userName');
-      // let password = req.param('password');
-      // let msg = '';
-      // //
-      // // if(!userId || !password){
-      // //   return res.badRequest('Please provide userName and password.');
-      // // }
-      //
-      // //let result = yield AuthService.hashPassword('hahaha');
-      // let result = yield AuthService.comparePassword('hahaha','$2a$10$HmLTn8Bg//cArEsdFRKHGOLZSp2lZzt4eeTtDB5A5tcrwsbNobGQO');
-      // //let result = yield AuthService.comparePassword('hahaha','xxx');
-      // console.log('result_ ;;;  ', result);
-      // return result;
     })
     .then(function(result){
       if(result.status == 'ok'){
@@ -59,12 +46,6 @@ module.exports = {
       console.log('*** catch ***');
       console.log('err: ' + err);
       res.badRequest(err);
-      // mismatch password will caused this err:
-      //{ [MismatchError: invalid] message: 'invalid', name: 'MismatchError' }
-      // if(err.name == 'MismatchError'){
-      //   res.ok('haha');
-      // }
-      // res.badRequest();
     });
   },
 }

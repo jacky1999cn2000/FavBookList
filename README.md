@@ -2,10 +2,16 @@
 
 ### 后端API
 
-1. /search 通过豆瓣API按照关键字搜索书籍
-2. /readfree 通过ISBN在readfree.me网站上搜索相应书籍的网页
-3. /register 注册用户(密码在数据库中用bcrypt加密)
-4. /login 用户登录，密码通过bcrypt验证成功后，生成jwt返回
+##### Book API
+1. GET book/search?q=[关键字] 通过豆瓣API按照关键字搜索书籍
+2. GET book/readfree?q=[ISBN] 通过ISBN在readfree.me网站上搜索相应书籍的网页
+3. POST book/booklist -d [name:booklist名字] -h [jwt:login返回的token] 为jwt中user创建一个booklist
+4. GET book/booklist -h [jwt:login返回的token] 返回jwt中user的信息和booklist
+
+##### Auth API
+1. POST auth/register -d [userName:用户名(邮箱), password:password] 注册用户(密码在数据库中用bcrypt加密)
+2. POST auth/login -d [userName:用户名(邮箱), password:password] 用户登录，密码通过bcrypt验证成功后，生成jwt返回
+
 
 
 ---
@@ -35,3 +41,14 @@
 
 * sailsjs model validation
  * [在create和update时候使用try...catch来捕获 MismatchError](http://sailsjs.org/documentation/concepts/models-and-orm/validations)
+
+* 端口被占用
+ * [如何找到占用某端口的进程然后kill掉](http://stackoverflow.com/questions/12397175/how-do-i-close-an-open-port-from-the-terminal-on-the-mac)
+
+* sails policies
+ * [policies简介](http://sailsjs.org/documentation/concepts/policies)
+ * policies/isAuthenticated.js用来解析jwt,结果存在req.user里面
+
+* sails configs
+ * [config简介](http://sailsjs.org/documentation/concepts/configuration)
+ * config/appconfig.js里放入可变参数

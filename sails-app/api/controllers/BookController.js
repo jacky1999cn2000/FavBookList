@@ -12,14 +12,41 @@ var co = require('co');
 module.exports = {
 
     getUserBookList: function(req, res){
+      co(function* (){
+        //since we already authenticated jwt, so the user exists for sure;
+        //however, booklist will possibly be empty array.
+        let record = yield User.findOne({username:req.user.username}).populate('booklist');
+        delete record.password;
 
+        let result = {};
+        result.status = 'ok';
+        result.data = record;
+        return result;
+      })
+      .then(function(result){
+        res.ok(result);
+      })
+      .catch(function(err) {
+        console.log('*** catch ***');
+        console.log(err);
+        res.badRequest();
+      });
     },
 
     createUserBookList: function(req, res){
-
       co(function* (){
-        let result = BookService.createUserBookList(req, res);
-        console.log('controller result - ',result);
+        let result = {};
+
+        let record = yield BookList.findOne({name:req.param('name')});
+        if(record){
+          result.status = 'error';
+          result.statusMessage = 'A booklist with same name already exists.';
+          return result;
+        }
+
+        let createdBookList = yield BookList.create({name:req.param('name'),owner:req.user.id});
+        result.status = 'ok';
+        result.data = createdBookList;
         return result;
       })
       .then(function(result){

@@ -50,6 +50,6 @@ module.exports.policies = {
 	// }
   BookController:{
     createUserBookList:'isAuthenticated',
-    //readfree:'isAuthenticated'
+    getUserBookList:'isAuthenticated'
   }
 };

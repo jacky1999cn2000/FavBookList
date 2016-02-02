@@ -13,36 +13,6 @@ var BookService = {
   * SERVICE METHODS
   */
 
-  createUserBookList: function(req, res){
-    return co(function* (){
-      let user = req.user;
-      let booklistName = req.param('name');
-      console.log('user- ', user);
-      console.log('name- ', booklistName);
-
-      let result = {};
-
-      if(!user || !booklistName){
-        result.status = 'error';
-        result.errorMessage = 'User or booklistName are not available.';
-        return result;
-      }
-
-      result = yield BookService.findBookList(booklistName);
-      console.log('service findBookList result- ', result);
-      //if user with same name already exists, return error
-      if(result.status == 'ok'){
-        delete result.data;
-        result.status = 'error';
-        result.errorMessage = 'A booklist with same name already exists.'
-        return result;
-      }
-
-      result = yield BookService.createBookList({'name':booklistName,'owner':user.id});
-      return result;
-    });
-  },
-
   /*
   * search book via douban api
   */
@@ -108,43 +78,6 @@ var BookService = {
   /*
   * UTILITY METHODS
   */
-
-  /*
-  * create booklist in db (try...catch block was used for sailsjs built-in validation check)
-  */
-  createBookList:function(booklist){
-    return co(function* (){
-      let result = {};
-      try{
-        let createdBookList = yield BookList.create(booklist);
-        result.status = 'ok';
-        result.data = createdBookList;
-        return result;
-      }catch(err){
-        result.status = 'error';
-        result.errorMessage = err;
-        return result;
-      }
-    });
-  },
-
-  /*
-  * find booklist in db
-  */
-  findBookList:function(name){
-    return co(function* (){
-      let result = {};
-      let record = yield BookList.findOne({name:name});
-      if(typeof record === 'undefined'){
-        result.status = 'error';
-        result.statusMessage = 'Can\'t find booklist in database.';
-        return result;
-      }
-      result.status = 'ok';
-      result.data = record;
-      return result;
-    });
-  },
 
   /*
   * filter out unnecessary keys from an object

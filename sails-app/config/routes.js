@@ -40,8 +40,9 @@ module.exports.routes = {
 
   'get /book/search': 'BookController.search',
   'get /book/readfree': 'BookController.readfree',
+  'get /book/bookList': 'BookController.getUserBookList',
   'post /book/bookList': 'BookController.createUserBookList',
-
+  
   'post /auth/register': 'AuthController.register',
   'post /auth/login': 'AuthController.login'
 

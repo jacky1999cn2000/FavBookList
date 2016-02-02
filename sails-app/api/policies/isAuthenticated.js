@@ -9,6 +9,7 @@ module.exports = function isAuthenticated(req, res, next){
   if(token){
     jwt.verify(token, process.env.secret, function(err, decoded){
       if(err){
+        console.log('auth err ', err);
         return res.badRequest({status:'error',statusMessage:'Failed to authenticate token.'});
       }else{
         req.user = decoded;

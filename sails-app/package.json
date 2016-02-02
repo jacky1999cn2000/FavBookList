@@ -31,7 +31,7 @@
   },
   "scripts": {
     "debug": "node debug app.js",
-    "start": "node app.js"
+    "start": "node_modules/nodemon/bin/nodemon.js app.js"
   },
   "main": "app.js",
   "repository": {

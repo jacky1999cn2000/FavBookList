@@ -67,7 +67,7 @@ module.exports.connections = {
 
   // mongodb_remote: {
   //   adapter: 'sails-mongo',
-  //   url: process.env.MONGOLAB_URI
+  //   url: 'mongodb://root:root@ds055525.mongolab.com:55525/favbooklist'
   // },
 
   /***************************************************************************

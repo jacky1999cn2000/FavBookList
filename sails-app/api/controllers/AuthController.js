@@ -91,7 +91,7 @@ module.exports = {
       }
 
       //authentication success, so create token and return
-      let token = jwt.sign(record,process.env.secret,{expiresIn: 3600});
+      let token = jwt.sign(record,sails.config.appconfig.secret,{expiresIn: 3600});
       result.status = 'ok';
       result.token = token;
       return result;

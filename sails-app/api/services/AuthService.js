@@ -6,7 +6,7 @@
 var co = require('co'),
  	  request = require("co-request"),
     bcrypt = require('bcrypt-as-promised'),
-    jwt = require('jsonwebtoken');;
+    jwt = require('jsonwebtoken');
 
 var AuthService = {
 
@@ -23,6 +23,16 @@ var AuthService = {
       if(!userName || !password){
         result.status = 'error';
         result.errorMessage = 'Please provide userName and password.';
+        return result;
+      }
+
+      result = yield AuthService.findUser(userName);
+
+      //if user with same name already exists, return error
+      if(result.status == 'ok'){
+        delete result.data;
+        result.status = 'error';
+        result.errorMessage = 'User already exists.'
         return result;
       }
 

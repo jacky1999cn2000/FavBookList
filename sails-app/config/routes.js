@@ -37,11 +37,13 @@ module.exports.routes = {
   },
 
   'get /available': 'SystemController.available',
-  'get /search': 'BookController.search',
-  'get /readfree': 'BookController.readfree',
 
-  'post /register': 'AuthController.register',
-  'post /login': 'AuthController.login'
+  'get /book/search': 'BookController.search',
+  'get /book/readfree': 'BookController.readfree',
+  'post /book/bookList': 'BookController.createUserBookList',
+
+  'post /auth/register': 'AuthController.register',
+  'post /auth/login': 'AuthController.login'
 
   /***************************************************************************
   *                                                                          *

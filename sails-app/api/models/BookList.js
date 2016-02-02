@@ -1,5 +1,5 @@
 /**
- * User.js
+ * Booklist.js
  *
  * @description :: TODO: You might write a short summary of how this model works and what it represents here.
  * @docs        :: http://sailsjs.org/#!documentation/models
@@ -11,19 +11,13 @@
 module.exports = {
 
     attributes: {
-        userName: {
+        name: {
             required: true,
-            email: true,
             unique: true,
             type: 'string'
         },
-        password: {
-            required: true,
-            type: 'string',
-        },
-        booklist:{
-            collection: 'booklist',
-            via: 'owner'
+        owner: {
+            model:'user'
         }
     }
 

@@ -58,3 +58,9 @@
 * sails configs
  * [config简介](http://sailsjs.org/documentation/concepts/configuration)
  * config/appconfig.js里放入可变参数
+
+* heroku deploy
+ * [git需要在sails项目的根目录，否则的话heroku cedar无法辨识](http://stackoverflow.com/questions/8361475/heroku-push-rejected-no-cedar-supported-app-detected)
+ * [如果碰到"heroku does not appear to be a git repository",意味着尚未把heroku加到git remote中去](https://devcenter.heroku.com/articles/git)
+ * [如果想移除某个git remote](https://help.github.com/articles/removing-a-remote/)
+ * [favbooklist项目把front和sails-app放在一起了，为了depoy sails-app到heroku,需要从github上git clone下来整个项目到一个新地方，然后把sails-app摘出来，再在sails-app里面走这套流程](http://vort3x.me/sailsjs-heroku/)

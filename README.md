@@ -3,10 +3,16 @@
 ### 后端API
 
 ##### Book API
-1. GET book/search?q=[关键字] 通过豆瓣API按照关键字搜索书籍
-2. GET book/readfree?q=[ISBN] 通过ISBN在readfree.me网站上搜索相应书籍的网页
-3. POST book/booklist -d [name:booklist名字] -h [jwt:login返回的token] 为jwt中user创建一个booklist
-4. GET book/booklist -h [jwt:login返回的token] 返回jwt中user的信息和booklist
+1. GET /book/search?q=[关键字] 通过豆瓣API按照关键字搜索书籍
+2. GET /book/readfree?q=[ISBN] 通过ISBN在readfree.me网站上搜索相应书籍的网页
+
+1. POST /book -d [name:booklist名字] -h [jwt:login返回的token] 为jwt中user创建一个booklist
+2. GET /book -h [jwt:login返回的token] 返回jwt中user的信息和booklist
+3. DELETE /book -d [booklist:booklist] -h [jwt:login返回的token] 为jwt中user移除此booklist
+
+1. POST /book/booklist -d [book:book,booklist:booklist] -h [jwt:login返回的token] 将此book添加到此booklist中去
+2. GET /book/booklist?id=[booklistid] -h [jwt:login返回的token] 返回该booklist中所有的books
+3. DELETE /book/booklist -d [book:book,booklist:booklist] -h [jwt:login返回的token] 将此book此booklist中移去
 
 ##### Auth API
 1. POST auth/register -d [userName:用户名(邮箱), password:password] 注册用户(密码在数据库中用bcrypt加密)

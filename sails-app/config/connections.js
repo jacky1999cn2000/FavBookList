@@ -56,19 +56,19 @@ module.exports.connections = {
   * Run: npm install sails-mongo                                             *
   *                                                                          *
   ***************************************************************************/
-  mongodb_local: {
-    adapter: 'sails-mongo',
-    host: 'localhost',
-    port: 27017,
-    // user: 'username',
-    // password: 'password',
-    database: 'favbooklist'
-  },
-
-  // mongodb_remote: {
+  // mongodb_local: {
   //   adapter: 'sails-mongo',
-  //   url: 'mongodb://root:root@ds055525.mongolab.com:55525/favbooklist'
+  //   host: 'localhost',
+  //   port: 27017,
+  //   // user: 'username',
+  //   // password: 'password',
+  //   database: 'favbooklist'
   // },
+
+  mongodb_remote: {
+    adapter: 'sails-mongo',
+    url: 'mongodb://root:root@ds055525.mongolab.com:55525/favbooklist'
+  },
 
   /***************************************************************************
   *                                                                          *

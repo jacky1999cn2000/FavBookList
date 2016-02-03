@@ -40,9 +40,15 @@ module.exports.routes = {
 
   'get /book/search': 'BookController.search',
   'get /book/readfree': 'BookController.readfree',
-  'get /book/bookList': 'BookController.getUserBookList',
-  'post /book/bookList': 'BookController.createUserBookList',
-  
+
+  'get /book': 'BookController.getUserBookList',
+  'post /book': 'BookController.createUserBookList',
+  'delete /book': 'BookController.deleteUserBookList',
+
+  'get /book/bookList': 'BookController.getBooksFromBookList',
+  'post /book/bookList': 'BookController.addBookToBookList',
+  'delete /book/bookList': 'BookController.removeBookFromBookList',
+
   'post /auth/register': 'AuthController.register',
   'post /auth/login': 'AuthController.login'
 

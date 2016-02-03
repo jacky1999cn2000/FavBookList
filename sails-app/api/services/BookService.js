@@ -19,7 +19,7 @@ var BookService = {
   search: function(query) {
     return co(function* (){
 
-      let url = 'https://api.douban.com/v2/book/search' + '?' + BookService.serialize(query);
+      let url = sails.config.appconfig.douban + '?' + BookService.serialize(query);
       let resObj = yield BookService.makeRequest(url);
 
       let result = {};
@@ -33,8 +33,7 @@ var BookService = {
       if(result.hasPrev){
         result.prevStart = resObj.start - 20;
       }
-
-      let keys = ['images','alt','id','title','author','isbn13'];
+      
       result.books = [];
 
       if(resObj.books && resObj.books.length > 0){
@@ -52,7 +51,7 @@ var BookService = {
   readfree: function(query) {
     return co(function* (){
 
-      let url = 'http://readfree.me/search' + '?' + BookService.serialize(query);;
+      let url = sails.config.appconfig.readfree + '?' + BookService.serialize(query);;
       let response = yield BookService.makeRequest(url);
       let result = {};
 
@@ -83,7 +82,7 @@ var BookService = {
   * filter out unnecessary keys from an object
   */
   filterOutUnnecessaryKeys: function(obj) {
-		let keys = ['images','alt','id','title','author','isbn10','isbn13'];
+		let keys = ['images','alt','title','author','isbn13'];
 		let result = {};
 		keys.forEach((key) => {
 			if(obj[key]) result[key] = obj[key];

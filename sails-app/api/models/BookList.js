@@ -18,6 +18,10 @@ module.exports = {
         },
         owner: {
             model:'user'
+        },
+        books:{
+            collection: 'book',
+            via: 'booklist'
         }
     }
 

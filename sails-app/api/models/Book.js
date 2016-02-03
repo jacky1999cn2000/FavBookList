@@ -17,10 +17,6 @@ module.exports = {
         alt: {
           type: 'string'
         },
-        id: {
-          type: 'string'
-
-        },
         isbn13: {
           type: 'string'
         },
@@ -29,6 +25,10 @@ module.exports = {
         },
         author: {
           type: 'array'
+        },
+        booklist:{
+            collection: 'booklist',
+            via: 'books'
         }
     }
 

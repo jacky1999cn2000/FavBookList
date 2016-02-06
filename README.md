@@ -2,27 +2,37 @@
 
 ### 后端API
 
-##### Book API
-1. GET /book/search?q=[关键字] 通过豆瓣API按照关键字搜索书籍
-2. GET /book/readfree?q=[ISBN] 通过ISBN在readfree.me网站上搜索相应书籍的网页
+* Book API
+ * GET /book/search?q=[关键字] 通过豆瓣API按照关键字搜索书籍
+ * GET /book/readfree?q=[ISBN] 通过ISBN在readfree.me网站上搜索相应书籍的网页
 
-1. POST /book -d [name:booklist名字] -h [jwt:login返回的token] 为jwt中user创建一个booklist
-2. GET /book -h [jwt:login返回的token] 返回jwt中user的信息和booklist
-3. DELETE /book -d [booklist:booklist] -h [jwt:login返回的token] 为jwt中user移除此booklist
+ * POST /book -d [name:booklist名字] -h [jwt:login返回的token] 为jwt中user创建一个booklist
+ * GET /book -h [jwt:login返回的token] 返回jwt中user的信息和booklist
+ * DELETE /book -d [booklist:booklist] -h [jwt:login返回的token] 为jwt中user移除此booklist
 
-1. POST /book/booklist -d [book:book,booklist:booklist] -h [jwt:login返回的token] 将此book添加到此booklist中去
-2. GET /book/booklist?id=[booklistid] -h [jwt:login返回的token] 返回该booklist中所有的books
-3. DELETE /book/booklist -d [book:book,booklist:booklist] -h [jwt:login返回的token] 将此book此booklist中移去
+ * POST /book/booklist -d [book:book,booklist:booklist] -h [jwt:login返回的token] 将此book添加到此booklist中去
+ * GET /book/booklist?id=[booklistid] -h [jwt:login返回的token] 返回该booklist中所有的books
+ * DELETE /book/booklist -d [book:book,booklist:booklist] -h [jwt:login返回的token] 将此book此booklist中移去
 
-##### Auth API
-1. POST auth/register -d [userName:用户名(邮箱), password:password] 注册用户(密码在数据库中用bcrypt加密)
-2. POST auth/login -d [userName:用户名(邮箱), password:password] 用户登录，密码通过bcrypt验证成功后，生成jwt返回
-
-
+* Auth API
+ * POST auth/register -d [userName:用户名(邮箱), password:password] 注册用户(密码在数据库中用bcrypt加密)
+ * POST auth/login -d [userName:用户名(邮箱), password:password] 用户登录，密码通过bcrypt验证成功后，生成jwt返回
 
 ---
 
 ### 前端
+
+* gulpfile.js
+ * minify-html task 用来最小化html(index.html)
+ * sass task 用来compile sass
+ * compressed task 用来压缩js
+ * connect task 用来serve dist目录下的index.html静态文件
+ * watch task 用来监视html,sass,js的变化，然后run相应的task
+ * livereload 使得每个task完成后自动reload
+ * browserify 把所有的js文件以及用到的dependencies都打包成一个文件
+ * babelify 用来把jsx代码转换为js(记住要装babel presets并加到.babelrc里面去)
+ * vinyl-source-stream和streamify是为了使得不同的gulp module间stream保持一致
+ * uglify 混淆代码
 
 ---
 

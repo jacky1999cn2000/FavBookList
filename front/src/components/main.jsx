@@ -1,13 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './app/app';
+import AuthPanel from './authpanel/authpanel';
 
 ReactDOM.render(
-  <App/>,
-  document.getElementById('test')
+  <AuthPanel/>,
+  document.getElementsByClassName('container')[0]
 );
-//
-// React.render(
-//   <h1>Hello, world!</h1>,
-//   document.body
-// );

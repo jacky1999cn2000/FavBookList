@@ -22,9 +22,12 @@
 
 ### 前端
 
+* sass
+ * [如何用bower安装bootstrap and bootswatch theme - 参考style.scss里面的注释](https://github.com/guru-digital/bootswatch-sass)
+
 * gulpfile.js
  * minify-html task 用来最小化html(index.html)
- * sass task 用来compile sass
+ * sass task 用来compile scss
  * compressed task 用来压缩js
  * connect task 用来serve dist目录下的index.html静态文件
  * watch task 用来监视html,sass,js的变化，然后run相应的task

@@ -17,6 +17,7 @@
 @import "bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap";
 @import "bower_components/bootswatch-sass/superhero/bootswatch";
 
+
 .form-signin
 {
     max-width: 330px;
@@ -40,15 +41,37 @@
 }
 .form-signin input[type="text"]
 {
-    margin-bottom: -1px;
+    margin-bottom: 0px;
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0;
 }
 .form-signin input[type="password"]
 {
-    margin-bottom: -1px;
+    margin-bottom: 0px;
     border-top-left-radius: 0;
     border-top-right-radius: 0;
+}
+.wrong-input
+{
+  border-color: #ff0000
+}
+.correct-input
+{
+  border-color: #00ff00
+}
+.alert-wall
+{
+  position: relative;
+  top:100px;
+
+}
+.animated.shake
+{
+ -webkit-animation-duration: 0.3s;
+    -moz-animation-duration: 0.3s;
+     -ms-animation-duration: 0.3s;
+      -o-animation-duration: 0.3s;
+         animation-duration: 0.3s;
 }
 .box-wall
 {
@@ -71,7 +94,7 @@
     -webkit-border-radius: 50%;
     border-radius: 50%;
 }
-.register
+.registerorlogin
 {
     text-align: center;
     display: block;

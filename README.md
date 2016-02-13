@@ -39,7 +39,40 @@
 
 ---
 
-### TRIVIA
+### FRONTEND TRIVIA
+
+ * [animated.css](https://daneden.github.io/animate.css/)
+  * 和document中有点不一样的是，当定义一个animate的duration之类的时候，需要写明是哪个animation，如下：
+  ```
+  .animated.shake
+  {
+   -webkit-animation-duration: 0.3s;
+      -moz-animation-duration: 0.3s;
+       -ms-animation-duration: 0.3s;
+        -o-animation-duration: 0.3s;
+           animation-duration: 0.3s;
+  }
+  ```
+ * React可以在render中通过 ref={(ref) => this.self = ref} 来设定一个自己的ref,然后在其他函数中引用
+
+ ```
+ render: function(){
+
+   let divCss = this.props.display ? "alert alert-danger alert-wall animated shake" : "hide";
+
+   return <div className={divCss} ref={(ref) => this.self = ref}>
+             <strong>Error:</strong> {this.props.content}
+         </div>;
+ }
+
+ componentDidUpdate: function() {
+   setTimeout(()=>{this.self.className="hide"},3000);
+ },
+ ```
+
+---
+
+### BACKEND TRIVIA
 
 * MongoDB
  * [通过brew安装local mongodb](https://docs.mongodb.org/manual/tutorial/install-mongodb-on-os-x/)

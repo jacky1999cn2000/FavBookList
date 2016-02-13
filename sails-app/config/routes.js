@@ -49,6 +49,7 @@ module.exports.routes = {
   'post /book/bookList': 'BookController.addBookToBookList',
   'delete /book/bookList': 'BookController.removeBookFromBookList',
 
+  'get /auth/check': 'AuthController.check',
   'post /auth/register': 'AuthController.register',
   'post /auth/login': 'AuthController.login'
 

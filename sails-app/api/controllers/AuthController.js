@@ -12,6 +12,37 @@ var co = require('co'),
 
 module.exports = {
 
+  check: function(req, res){
+    co(function* (){
+
+      let username = req.param('username');
+      let result = {};
+
+      let record = yield User.findOne({username:username});
+
+      //if user with same name already exists, return error
+      if(record){
+        result.status = 'error';
+        return result;
+      }
+
+      result.status = 'ok';
+      return result;
+    })
+    .then(function(result){
+      if(result.status == 'ok'){
+        res.ok(result);
+      }else{
+        res.badRequest(result);
+      }
+    })
+    .catch(function(err) {
+      console.log('*** catch ***');
+      console.log('err: ' + err);
+      res.badRequest(err);
+    });
+  },
+
   register: function(req, res){
     co(function* (){
 

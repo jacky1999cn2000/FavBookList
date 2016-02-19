@@ -32,7 +32,7 @@ gulp.task('sass', function () {
         .pipe(sourcemaps.init())
         .pipe(sass({outputStyle:'compressed'}))
         .pipe(sourcemaps.write('.'))
-        .pipe(gulp.dest('./dist'))
+        .pipe(gulp.dest('./dist/css/'))
         .pipe(livereload());
 });
 
@@ -49,8 +49,8 @@ gulp.task('compressed', function() {
         .transform(babelify)
         .bundle()
         .pipe(source('script.min.js'))
-        .pipe(streamify(uglify({source_map:true})))
-        .pipe(gulp.dest('dist'))
+        // .pipe(streamify(uglify({source_map:true})))
+        .pipe(gulp.dest('./dist/js/'))
         .pipe(livereload());
 });
 

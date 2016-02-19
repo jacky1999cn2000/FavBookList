@@ -37,6 +37,10 @@
  * vinyl-source-stream和streamify是为了使得不同的gulp module间stream保持一致
  * uglify 混淆代码
 
+* ReactJS
+ * [context](https://medium.com/@skwee357/the-land-of-undocumented-react-js-the-context-99b3f931ff73#.ff4zsw3gy)
+ * [react router - examples文件夹里有各种例子](https://github.com/reactjs/react-router/tree/latest)
+
 ---
 
 ### FRONTEND TRIVIA
@@ -69,6 +73,16 @@
    setTimeout(()=>{this.self.className="hide"},3000);
  },
  ```
+ 
+  * [glyphicon icon位置问题](https://github.com/twbs/bootstrap/issues/12873)
+  * bootswatch貌似没有定义下面这一系列(error success)东西，需要自己加进去
+     ```
+     .has-error {
+       .form-control{
+         border-color: $brand-danger;
+       }
+     }
+     ```
 
 ---
 

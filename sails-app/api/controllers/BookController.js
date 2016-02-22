@@ -128,14 +128,12 @@ module.exports = {
       co(function* (){
         let result = {};
 
-        /* name duplication should be dealt with in front-end
-        */
-        // let record = yield BookList.findOne({name:req.param('name')});
-        // if(record){
-        //   result.status = 'error';
-        //   result.statusMessage = 'A booklist with same name already exists.';
-        //   return result;
-        // }
+        let record = yield BookList.findOne({name:req.param('name')});
+        if(record){
+          result.status = 'error';
+          result.statusMessage = 'A booklist with same name already exists.';
+          return result;
+        }
 
         let createdBookList = yield BookList.create({name:req.param('name'),owner:req.user.id});
         result.status = 'ok';

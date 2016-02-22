@@ -15,8 +15,10 @@
  * DELETE /book/booklist -d [book:book,booklist:booklist] -h [jwt:login返回的token] 将此book此booklist中移去
 
 * Auth API
- * POST auth/register -d [userName:用户名(邮箱), password:password] 注册用户(密码在数据库中用bcrypt加密)
- * POST auth/login -d [userName:用户名(邮箱), password:password] 用户登录，密码通过bcrypt验证成功后，生成jwt返回
+ * GET /auth/check -h [jwt:login返回的token] 检查jwt里面的user是否存在
+ * POST /auth/register -d [userName:用户名(邮箱), password:password] 注册用户(密码在数据库中用bcrypt加密)
+ * POST /auth/login -d [userName:用户名(邮箱), password:password] 用户登录，密码通过bcrypt验证成功后，生成jwt返回
+ * DELETE /auth/user -h [jwt:login返回的token] 删除jwt里面的user以及该user所有的booklist
 
 ---
 
@@ -73,7 +75,7 @@
    setTimeout(()=>{this.self.className="hide"},3000);
  },
  ```
- 
+
   * [glyphicon icon位置问题](https://github.com/twbs/bootstrap/issues/12873)
   * bootswatch貌似没有定义下面这一系列(error success)东西，需要自己加进去
      ```

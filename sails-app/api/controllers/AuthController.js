@@ -43,6 +43,30 @@ module.exports = {
     });
   },
 
+  deleteUser: function(req, res){
+    co(function* (){
+
+      let deletedUser = yield User.destroy({id:req.user.id});
+
+      let result = {};
+      result.status = 'ok';
+      result.data = deletedUser;
+      return result;
+    })
+    .then(function(result){
+      if(result.status == 'ok'){
+        res.ok(result);
+      }else{
+        res.badRequest(result);
+      }
+    })
+    .catch(function(err) {
+      console.log('*** catch ***');
+      console.log(err);
+      res.badRequest();
+    });
+  },
+
   register: function(req, res){
     co(function* (){
 

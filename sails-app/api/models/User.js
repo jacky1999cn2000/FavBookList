@@ -25,6 +25,11 @@ module.exports = {
             collection: 'booklist',
             via: 'owner'
         }
+    },
+
+    afterDestroy: function(destroyedRecords, cb) {
+        // Destroy all booklist the deleted users own
+        BookList.destroy({owner: _.pluck(destroyedRecords, 'id')}).exec(cb);
     }
 
 };

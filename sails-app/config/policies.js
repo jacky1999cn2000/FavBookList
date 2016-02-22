@@ -52,9 +52,13 @@ module.exports.policies = {
     createUserBookList:'isAuthenticated',
     getUserBookList:'isAuthenticated',
     deleteUserBookList:'isAuthenticated',
-    
+
     addBookToBookList:'isAuthenticated',
     getBooksFromBookList:'isAuthenticated',
-    removeBookFromBookList:'isAuthenticated'
+    removeBookFromBookList:'isAuthenticated',
+  },
+
+  AuthController:{
+    deleteUser:'isAuthenticated',
   }
 };

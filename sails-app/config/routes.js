@@ -51,7 +51,8 @@ module.exports.routes = {
 
   'get /auth/check': 'AuthController.check',
   'post /auth/register': 'AuthController.register',
-  'post /auth/login': 'AuthController.login'
+  'post /auth/login': 'AuthController.login',
+  'delete /auth/user': 'AuthController.deleteUser',
 
   /***************************************************************************
   *                                                                          *

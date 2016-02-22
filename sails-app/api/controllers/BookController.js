@@ -141,11 +141,7 @@ module.exports = {
         return result;
       })
       .then(function(result){
-        if(result.status == 'ok'){
-          res.ok(result);
-        }else{
-          res.badRequest(result);
-        }
+        res.ok(result);
       })
       .catch(function(err) {
         console.log('*** catch ***');
@@ -169,11 +165,7 @@ module.exports = {
         return result;
       })
       .then(function(result){
-        if(result.status == 'ok'){
-          res.ok(result);
-        }else{
-          res.badRequest(result);
-        }
+        res.ok(result);
       })
       .catch(function(err) {
         console.log('*** catch ***');

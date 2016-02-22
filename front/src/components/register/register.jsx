@@ -1,6 +1,7 @@
 import React from 'react';
 import Input from '../input/input';
 import {Link} from 'react-router';
+import MessageBox from '../messagebox/messagebox';
 
 let Register = React.createClass({
 
@@ -15,16 +16,22 @@ let Register = React.createClass({
           email:'initializing',
           password:'initializing',
           confirm:'initializing'
-        }
+        },
+        messages: []
 	    };
 	},
 
+  /*
+  *  This is the so-called controlled form, since all the input values were controlled by states
+  */
   setRegisterState: function(event){
     let name = event.target.name;
     let value = event.target.value;
     this.state.register[name] = value;
+    //reset error to initial state if user refocused on the input
     this.state.errors[name] = 'initializing';
 
+    //for confirm input, add this extra code to handle button enablement
     if(name == 'confirm'){
       if(value == this.state.register.password){
         this.state.errors[name] = '';
@@ -32,16 +39,20 @@ let Register = React.createClass({
         this.state.errors[name] = 'Passwords don\'t match.';
       }
     }
-    //console.log('this.state.register ', this.state.register);
     return this.setState({register:this.state.register,errors:this.state.errors});
   },
 
+  /*
+  * To validate each input when their onBlur event was triggered
+  */
   validateData: function(event){
     switch (event.target.name) {
       case 'email':
         if(!this.state.register.email || this.state.register.email.indexOf('@') == -1){
           this.state.errors['email'] = 'Please input a valid email.'
-          this.setState({errors:this.state.errors});
+          let newMBox = this.state.messages.slice();
+          newMBox.push('Please input a valid email.');
+          this.setState({errors:this.state.errors,messages:newMBox});
           break;
         }
         this.state.errors['email'] = '';
@@ -74,7 +85,16 @@ let Register = React.createClass({
     event.preventDefault();
   },
 
+  autoRefresh: function(messages){
+    if(this.state.messages.length > 0){
+      var newMBox = this.state.messages.slice();
+      newMBox.shift();
+      this.setState({messages:newMBox});
+    }
+  },
+
   render: function(){
+    let type = (this.state.errors.email == '' && this.state.errors.password == '' && this.state.errors.confirm == '') ? 'info' : 'alert';
 
     return (
       <div className="row">
@@ -89,10 +109,8 @@ let Register = React.createClass({
 
                 <Link to="/login" className="auth-redirect-link">Login</Link>
               </form>
-
-
-
           </div>
+          <MessageBox messages={this.state.messages} autoRefresh={this.autoRefresh} type={type}/>
         </div>
       </div>);
   }

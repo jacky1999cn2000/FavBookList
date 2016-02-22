@@ -17,7 +17,8 @@ let Register = React.createClass({
           password:'initializing',
           confirm:'initializing'
         },
-        messages: []
+        messageType:'alert',
+        messages:[]
 	    };
 	},
 
@@ -28,8 +29,19 @@ let Register = React.createClass({
     let name = event.target.name;
     let value = event.target.value;
     this.state.register[name] = value;
+
     //reset error to initial state if user refocused on the input
     this.state.errors[name] = 'initializing';
+
+    //reset confirm if reinput password
+    if(name == 'password'){
+      this.state.register['confirm'] = '';
+      this.state.errors['confirm'] = 'initializing';
+      //enable confirm input if criteria met
+      if(this.state.register['password'] && this.state.register.password.length >= 6){
+        this.state.errors.password = '';
+      }
+    }
 
     //for confirm input, add this extra code to handle button enablement
     if(name == 'confirm'){
@@ -39,7 +51,9 @@ let Register = React.createClass({
         this.state.errors[name] = 'Passwords don\'t match.';
       }
     }
-    return this.setState({register:this.state.register,errors:this.state.errors});
+
+    this.setState({register:this.state.register,errors:this.state.errors});
+    return;
   },
 
   /*
@@ -50,9 +64,7 @@ let Register = React.createClass({
       case 'email':
         if(!this.state.register.email || this.state.register.email.indexOf('@') == -1){
           this.state.errors['email'] = 'Please input a valid email.'
-          let newMBox = this.state.messages.slice();
-          newMBox.push('Please input a valid email.');
-          this.setState({errors:this.state.errors,messages:newMBox});
+          this.setState({errors:this.state.errors});
           break;
         }
         this.state.errors['email'] = '';
@@ -81,20 +93,35 @@ let Register = React.createClass({
     }
   },
 
-  register: function(event){
-    event.preventDefault();
+  getObjectValues: function(dataObject){
+    let dataArray = new Array;
+    for(let o in dataObject) {
+        dataArray.push(dataObject[o]);
+    }
+    return dataArray;
   },
 
-  autoRefresh: function(messages){
-    if(this.state.messages.length > 0){
-      var newMBox = this.state.messages.slice();
-      newMBox.shift();
-      this.setState({messages:newMBox});
+  autoRefresh: function(){
+    if(this.state.messageType == 'info'){
+      if(this.state.messages.length > 0){
+        this.state.messages.pop();
+        this.setState({messages:this.state.messages});
+      }
     }
   },
 
+  register: function(event){
+    event.preventDefault();
+    this.state.messageType = 'info';
+    this.state.messages.push('congrats');
+    this.setState({messageType:this.state.messageType,messages:this.state.messages});
+  },
+
   render: function(){
-    let type = (this.state.errors.email == '' && this.state.errors.password == '' && this.state.errors.confirm == '') ? 'info' : 'alert';
+
+    let type = this.state.messageType;
+    let messages = type == 'info' ? this.state.messages : this.getObjectValues(this.state.errors);
+    let disabled = this.state.errors['password'] != '';
 
     return (
       <div className="row">
@@ -102,15 +129,15 @@ let Register = React.createClass({
           <div className="box-wall animated zoomInUp" id="register">
               <img className="profile-img" src="./img/snoopy.gif"/>
               <form className="form-signin">
-                <Input type="text" placeholder="Email" name="email" onChange={this.setRegisterState} onBlur={this.validateData} error={this.state.errors.email} />
-                <Input type="password" placeholder="Password" name="password" onChange={this.setRegisterState} onBlur={this.validateData} error={this.state.errors.password} />
-                <Input type="password" placeholder="Confirm Password" name="confirm" onChange={this.setRegisterState} onBlur={this.validateData} error={this.state.errors.confirm} />
+                <Input type="text" placeholder="Email" name="email" value={this.state.register.email} onChange={this.setRegisterState} onBlur={this.validateData} error={this.state.errors.email} />
+                <Input type="password" placeholder="Password" name="password" value={this.state.register.password} onChange={this.setRegisterState} onBlur={this.validateData} error={this.state.errors.password} />
+                <Input type="password" placeholder="Confirm Password" name="confirm" value={this.state.register.confirm} onChange={this.setRegisterState} onBlur={this.validateData} error={this.state.errors.confirm} disabled={disabled}/>
                 <button className="btn btn-lg btn-primary btn-block" type="submit" disabled={!!this.state.errors.email || !!this.state.errors.password || !!this.state.errors.confirm} onClick={this.register}>Register</button>
 
                 <Link to="/login" className="auth-redirect-link">Login</Link>
               </form>
           </div>
-          <MessageBox messages={this.state.messages} autoRefresh={this.autoRefresh} type={type}/>
+          <MessageBox type={type} messages={messages} autoRefresh={this.autoRefresh}/>
         </div>
       </div>);
   }

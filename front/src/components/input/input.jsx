@@ -10,12 +10,19 @@ let Input = React.createClass({
     placeholder: React.PropTypes.string,
     value: React.PropTypes.string,
     error: React.PropTypes.string,
+    disabled: React.PropTypes.bool,
     onChange: React.PropTypes.func,
     onBlur: React.PropTypes.func
   },
 
-  render: function(){
+  getDefaultProps: function() {
+    return {
+      disabled: false
+    };
+  },
 
+  render: function(){
+if(this.props.name == 'confirm') console.log('value ',this.props.value);
     let wrapperClass;
     let spanItem;
 
@@ -38,6 +45,7 @@ let Input = React.createClass({
             ref={this.props.name}
             placeholder={this.props.placeholder}
             value={this.props.value}
+            disabled={this.props.disabled}
             onChange={this.props.onChange}
             onBlur={this.props.onBlur} />
             {spanItem}

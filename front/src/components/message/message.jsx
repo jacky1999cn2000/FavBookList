@@ -8,7 +8,7 @@ let Message = React.createClass({
   },
 
   render: function(){
-    console.log('this.props.type ',this.props.type);
+    
     let spanItem, divClassName;
 
     if(this.props.type == 'alert'){

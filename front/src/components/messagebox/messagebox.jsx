@@ -24,10 +24,11 @@ let MessageBox = React.createClass({
 
   render: function(){
 
-
     let messages = [];
     this.props.messages.forEach((message)=>{
-      messages.push(<Message key={message} content={message} type={this.props.type}/>)
+      if(message != '' && message != 'initializing'){
+        messages.push(<Message key={message} content={message} type={this.props.type}/>)
+      }
     });
 
 

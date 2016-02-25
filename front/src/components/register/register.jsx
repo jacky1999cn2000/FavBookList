@@ -2,6 +2,7 @@ import React from 'react';
 import Input from '../input/input';
 import {Link} from 'react-router';
 import MessageBox from '../messagebox/messagebox';
+import Auth from '../utils/auth';
 
 let Register = React.createClass({
 
@@ -30,8 +31,9 @@ let Register = React.createClass({
     let value = event.target.value;
     this.state.register[name] = value;
 
-    //reset error to initial state if user refocused on the input
+    //reset error to initial state & messageType to alert if user refocused on the input
     this.state.errors[name] = 'initializing';
+    this.state.messageType = 'alert';
 
     //reset confirm if reinput password
     if(name == 'password'){
@@ -52,7 +54,7 @@ let Register = React.createClass({
       }
     }
 
-    this.setState({register:this.state.register,errors:this.state.errors});
+    this.setState({messageType:this.state.messageType,register:this.state.register,errors:this.state.errors});
     return;
   },
 
@@ -112,9 +114,30 @@ let Register = React.createClass({
 
   register: function(event){
     event.preventDefault();
-    this.state.messageType = 'info';
-    this.state.messages.push('congrats');
-    this.setState({messageType:this.state.messageType,messages:this.state.messages});
+
+    let data = JSON.stringify({
+      'username': this.state.register.email,
+      'password': this.state.register.password
+    });
+
+    Auth.request('http://favbooklist.herokuapp.com/auth/register', this.imcallback, data);
+  },
+
+  imcallback: function(response){
+    console.log('imcallback!');
+    console.log('response ',response);
+    if (response.target.readyState === 4) {
+      let obj = JSON.parse(response.target.responseText);
+      if(obj.statu = 'error'){
+        this.state.errors.email = obj.errorMessage;
+        this.setState({messages:this.state.messages});
+
+      }
+    }
+
+    // console.log('in callback ');
+    // let obj = JSON.parse(response.target.responseText);
+    // console.log('callback response ',obj);
   },
 
   render: function(){

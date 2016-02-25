@@ -8,7 +8,7 @@ let Message = React.createClass({
   },
 
   render: function(){
-    
+
     let spanItem, divClassName;
 
     if(this.props.type == 'alert'){

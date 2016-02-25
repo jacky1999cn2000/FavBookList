@@ -11,7 +11,7 @@ var gulp = require('gulp'),
     streamify = require('gulp-streamify');
 
 var paths = {
-  scripts: 'src/components/**/*.jsx',
+  scripts: 'src/components/**/*.*',
   sass: 'src/scss/**/*.scss',
   html: '*.html'
 };

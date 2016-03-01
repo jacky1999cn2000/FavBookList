@@ -42,7 +42,15 @@
 * ReactJS
  * [context](https://medium.com/@skwee357/the-land-of-undocumented-react-js-the-context-99b3f931ff73#.ff4zsw3gy)
  * [react router - examples文件夹里有各种例子](https://github.com/reactjs/react-router/tree/latest)
-
+ * [programatically naviate out of compoments](https://github.com/reactjs/react-router/blob/master/docs/guides/NavigatingOutsideOfComponents.md)
+ * [browserHistory使用时配置server - 部署前修改](https://github.com/reactjs/react-router/blob/master/docs/guides/Histories.md)
+ * [setTimeout scope的绑定 (closure or bind())](http://stackoverflow.com/questions/1728563/changing-the-scope-of-an-anonymous-function-on-a-settimeout-causes-a-weird-warni)
+   ``` register.jsx : autoRefresh()
+     setTimeout((function(){
+       this.setState({messages:this.state.messages});
+       browserHistory.push('/');
+     }).bind(this), 3000);
+   ```
 ---
 
 ### FRONTEND TRIVIA

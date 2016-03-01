@@ -1,6 +1,7 @@
 import React from 'react';
 import Input from '../input/input';
 import {Link} from 'react-router';
+import {browserHistory} from 'react-router';
 import MessageBox from '../messagebox/messagebox';
 import Auth from '../utils/auth';
 
@@ -103,11 +104,14 @@ let Register = React.createClass({
     return dataArray;
   },
 
-  autoRefresh: function(){
+  autoRefresh: function(){console.log('autoRefresh');
     if(this.state.messageType == 'info'){
       if(this.state.messages.length > 0){
         this.state.messages.pop();
-        this.setState({messages:this.state.messages});
+        setTimeout((function(){
+          this.setState({messages:this.state.messages});
+          browserHistory.push('/');
+        }).bind(this), 3000);
       }
     }
   },
@@ -120,24 +124,24 @@ let Register = React.createClass({
       'password': this.state.register.password
     });
 
-    Auth.request('http://favbooklist.herokuapp.com/auth/register', this.imcallback, data);
+    //Auth.request('http://favbooklist.herokuapp.com/auth/register', this.imcallback, data);
+    Auth.request('http://localhost:1337/auth/register', this.registerCB, data);
   },
 
-  imcallback: function(response){
-    console.log('imcallback!');
-    console.log('response ',response);
+  registerCB: function(response){
     if (response.target.readyState === 4) {
       let obj = JSON.parse(response.target.responseText);
-      if(obj.statu = 'error'){
-        this.state.errors.email = obj.errorMessage;
-        this.setState({messages:this.state.messages});
 
+      //if user already exists, set error message to state.errors.email and set messages to update UI
+      if(obj.status == 'error'){ console.log('error ');
+        this.state.errors.email = obj.errorMessage;
+        this.setState({errors:this.state.errors,messages:this.state.messages});
+      }else{ console.log('success ');
+        this.state.messageType = 'info';
+        this.state.messages = ['Registration Succeed! Redirecting to Login page now.'];
+        this.setState({messageType:this.state.messageType,messages:this.state.messages});
       }
     }
-
-    // console.log('in callback ');
-    // let obj = JSON.parse(response.target.responseText);
-    // console.log('callback response ',obj);
   },
 
   render: function(){

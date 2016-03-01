@@ -22,7 +22,6 @@ let Input = React.createClass({
   },
 
   render: function(){
-if(this.props.name == 'confirm') console.log('value ',this.props.value);
     let wrapperClass;
     let spanItem;
 

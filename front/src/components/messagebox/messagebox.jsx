@@ -12,7 +12,7 @@ let MessageBox = React.createClass({
 
   getDefaultProps: function() {
     return {
-      displayTime: 5000
+      displayTime: 3000
     };
   },
 

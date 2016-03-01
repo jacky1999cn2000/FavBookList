@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {Router, Route, hashHistory, IndexRoute} from 'react-router';
+import {Router, Route, browserHistory, IndexRoute} from 'react-router';
 import App from './app/app';
 import BookPanel from './bookpanel/bookpanel';
 import Login from './login/login';
@@ -18,7 +18,7 @@ function requireAuth(nextState, replace) {
 
 
 ReactDOM.render((
-    <Router history={hashHistory}>
+    <Router history={browserHistory}>
       <Route path="/" component={App}>
         <IndexRoute component={BookPanel} onEnter={requireAuth}/>
         <Route path="/login" component={Login}/>

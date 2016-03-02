@@ -104,14 +104,14 @@ let Register = React.createClass({
     return dataArray;
   },
 
-  autoRefresh: function(){console.log('autoRefresh');
+  autoRefresh: function(){
     if(this.state.messageType == 'info'){
       if(this.state.messages.length > 0){
         this.state.messages.pop();
         setTimeout((function(){
           this.setState({messages:this.state.messages});
           browserHistory.push('/');
-        }).bind(this), 3000);
+        }).bind(this), 1500);
       }
     }
   },
@@ -133,10 +133,10 @@ let Register = React.createClass({
       let obj = JSON.parse(response.target.responseText);
 
       //if user already exists, set error message to state.errors.email and set messages to update UI
-      if(obj.status == 'error'){ console.log('error ');
+      if(obj.status == 'error'){
         this.state.errors.email = obj.errorMessage;
-        this.setState({errors:this.state.errors,messages:this.state.messages});
-      }else{ console.log('success ');
+        this.setState({errors:this.state.errors});
+      }else{
         this.state.messageType = 'info';
         this.state.messages = ['Registration Succeed! Redirecting to Login page now.'];
         this.setState({messageType:this.state.messageType,messages:this.state.messages});
@@ -148,7 +148,8 @@ let Register = React.createClass({
 
     let type = this.state.messageType;
     let messages = type == 'info' ? this.state.messages : this.getObjectValues(this.state.errors);
-    let disabled = this.state.errors['password'] != '';
+    let disabled_during_edit = this.state.errors['password'] != '';
+    let disabled_during_redirect = this.state.messages.length > 0;
 
     return (
       <div className="row">
@@ -156,11 +157,10 @@ let Register = React.createClass({
           <div className="box-wall animated zoomInUp" id="register">
               <img className="profile-img" src="./img/snoopy.gif"/>
               <form className="form-signin">
-                <Input type="text" placeholder="Email" name="email" value={this.state.register.email} onChange={this.setRegisterState} onBlur={this.validateData} error={this.state.errors.email} />
-                <Input type="password" placeholder="Password" name="password" value={this.state.register.password} onChange={this.setRegisterState} onBlur={this.validateData} error={this.state.errors.password} />
-                <Input type="password" placeholder="Confirm Password" name="confirm" value={this.state.register.confirm} onChange={this.setRegisterState} onBlur={this.validateData} error={this.state.errors.confirm} disabled={disabled}/>
+                <Input type="text" placeholder="Email" name="email" value={this.state.register.email} onChange={this.setRegisterState} onBlur={this.validateData} error={this.state.errors.email} disabled={disabled_during_redirect}/>
+                <Input type="password" placeholder="Password" name="password" value={this.state.register.password} onChange={this.setRegisterState} onBlur={this.validateData} error={this.state.errors.password} disabled={disabled_during_redirect}/>
+                <Input type="password" placeholder="Confirm Password" name="confirm" value={this.state.register.confirm} onChange={this.setRegisterState} onBlur={this.validateData} error={this.state.errors.confirm} disabled={disabled_during_edit || disabled_during_redirect}/>
                 <button className="btn btn-lg btn-primary btn-block" type="submit" disabled={!!this.state.errors.email || !!this.state.errors.password || !!this.state.errors.confirm} onClick={this.register}>Register</button>
-
                 <Link to="/login" className="auth-redirect-link">Login</Link>
               </form>
           </div>

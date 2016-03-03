@@ -76,18 +76,20 @@ let Login = React.createClass({
     let disabled = this.state.messageType == 'info';
 
     return (
-      <div className="row">
-        <div className="col-xs-12 col-sm-12 col-md-4 col-md-offset-4">
-          <div className="box-wall animated zoomInUp" id="login">
-            <img className="profile-img" src="./img/snoopy.gif"/>
-            <form className="form-signin">
-              <Input type="text" placeholder="Email" name="email" value={this.state.login.email} onChange={this.setLoginState} error={this.state.errors.email} disabled={disabled} />
-              <Input type="password" placeholder="Password" name="password" value={this.state.login.password} onChange={this.setLoginState} error={this.state.errors.password} disabled={disabled} />
-              <button className="btn btn-lg btn-primary btn-block" type="submit" onClick={this.login}>Sign in</button>
-              <Link to="/register" className="auth-redirect-link">Register</Link>
-            </form>
+      <div className="container">
+        <div className="row">
+          <div className="col-xs-12 col-sm-12 col-md-4 col-md-offset-4">
+            <div className="box-wall animated zoomInUp" id="login">
+              <img className="profile-img" src="./img/snoopy.gif"/>
+              <form className="form-signin">
+                <Input type="text" placeholder="Email" name="email" value={this.state.login.email} onChange={this.setLoginState} error={this.state.errors.email} disabled={disabled} />
+                <Input type="password" placeholder="Password" name="password" value={this.state.login.password} onChange={this.setLoginState} error={this.state.errors.password} disabled={disabled} />
+                <button className="btn btn-lg btn-primary btn-block" type="submit" onClick={this.login}>Sign in</button>
+                <Link to="/register" className="auth-redirect-link">Register</Link>
+              </form>
+            </div>
+            <MessageBox type={type} messages={messages} autoRefresh={this.autoRefresh}/>
           </div>
-          <MessageBox type={type} messages={messages} autoRefresh={this.autoRefresh}/>
         </div>
       </div>);
   }

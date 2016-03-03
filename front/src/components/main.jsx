@@ -25,5 +25,5 @@ ReactDOM.render((
         <Route path="/register" component={Register}/>
       </Route>
     </Router>
-  ), document.getElementsByClassName('container')[0]
+  ), document.getElementById('app')
 );

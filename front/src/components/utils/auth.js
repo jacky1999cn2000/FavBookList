@@ -1,6 +1,8 @@
 
 module.exports = {
 
+  url: 'http://localhost:1337', // 'http://favbooklist.herokuapp.com',
+
   loggedIn() {
     return !!localStorage.token
   },

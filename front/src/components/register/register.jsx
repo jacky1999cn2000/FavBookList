@@ -124,8 +124,7 @@ let Register = React.createClass({
       'password': this.state.register.password
     });
 
-    //Auth.request('http://favbooklist.herokuapp.com/auth/register', this.imcallback, data);
-    Auth.request('http://localhost:1337/auth/register', this.registerCB, data);
+    Auth.request(Auth.url + '/auth/register', this.registerCB, data);
   },
 
   registerCB: function(response){

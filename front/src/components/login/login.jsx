@@ -50,8 +50,7 @@ let Login = React.createClass({
       'password': this.state.login.password
     });
 
-    //Auth.request('http://favbooklist.herokuapp.com/auth/register', this.imcallback, data);
-    Auth.request('http://localhost:1337/auth/login', this.loginCB, data);
+    Auth.request(Auth.url + '/auth/login', this.loginCB, data);
   },
 
   loginCB: function(response){

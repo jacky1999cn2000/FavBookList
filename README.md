@@ -258,7 +258,7 @@
  * [programatically naviate out of compoments](https://github.com/reactjs/react-router/blob/master/docs/guides/NavigatingOutsideOfComponents.md)
  * [browserHistory使用时配置server - 部署前修改](https://github.com/reactjs/react-router/blob/master/docs/guides/Histories.md)
  * [setTimeout scope的绑定 (closure or bind())](http://stackoverflow.com/questions/1728563/changing-the-scope-of-an-anonymous-function-on-a-settimeout-causes-a-weird-warni)
-   ``` register.jsx : autoRefresh()
+   ``` 
      setTimeout((function(){
        this.setState({messages:this.state.messages});
        browserHistory.push('/');

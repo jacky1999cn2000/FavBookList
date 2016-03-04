@@ -3,17 +3,230 @@
 ### 后端API
 
 * Book API
- * GET /book/search?q=[关键字] 通过豆瓣API按照关键字搜索书籍
+ * GET /book/search?q=[关键字]&start=[index] 通过豆瓣API按照关键字搜索书籍
+```
+  {
+    "hasNext": true,
+    "hasPrev": false,
+    "nextStart": 20,
+    "books": [
+      {
+        "images": {
+          "small": "https://img3.doubanio.com/spic/s6640171.jpg",
+          "large": "https://img3.doubanio.com/lpic/s6640171.jpg",
+          "medium": "https://img3.doubanio.com/mpic/s6640171.jpg"
+        },
+        "alt": "http://book.douban.com/subject/6510686/",
+        "title": "Google时代的工作方法",
+        "author": [
+          "【美】道格拉斯*梅里尔  詹姆斯*马丁"
+        ],
+        "isbn13": "9787508627601"
+      },
+      {
+        "images": {
+          "small": "https://img3.doubanio.com/spic/s3965260.jpg",
+          "large": "https://img3.doubanio.com/lpic/s3965260.jpg",
+          "medium": "https://img3.doubanio.com/mpic/s3965260.jpg"
+        },
+        "alt": "http://book.douban.com/subject/3352459/",
+        "title": "星球Google",
+        "author": [
+          "兰德尔·斯特罗斯"
+        ],
+        "isbn13": "9787802491168"
+      },
+      {
+        "images": {
+          "small": "https://img1.doubanio.com/spic/s1518849.jpg",
+          "large": "https://img1.doubanio.com/lpic/s1518849.jpg",
+          "medium": "https://img1.doubanio.com/mpic/s1518849.jpg"
+        },
+        "alt": "http://book.douban.com/subject/1396503/",
+        "title": "Google成功的七堂课",
+        "author": [
+          "罗耀宗"
+        ],
+        "isbn13": "9787121013577"
+      },
+      {
+        "images": {
+          "small": "https://img1.doubanio.com/spic/s1377613.jpg",
+          "large": "https://img1.doubanio.com/lpic/s1377613.jpg",
+          "medium": "https://img1.doubanio.com/mpic/s1377613.jpg"
+        },
+        "alt": "http://book.douban.com/subject/1346353/",
+        "title": "Google成功的七堂課",
+        "author": [
+          "羅耀宗"
+        ],
+        "isbn13": "9789572983768"
+      }
+    ]
+  }
+```
  * GET /book/readfree?q=[ISBN] 通过ISBN在readfree.me网站上搜索相应书籍的网页
+ ```
+  {
+    "status": "notFound"
+  }
+ ```
+ ```
+   {
+     "status": "http://readfree.me/book/3352459/"
+   }
+ ```
 
  * POST /book -d [name:booklist名字] -h [jwt:login返回的token] 为jwt中user创建一个booklist
+  ```
+    {
+      "status": "error",
+      "statusMessage": "A booklist with same name already exists."
+    }
+  ```
+  ```
+    {
+      "status": "ok",
+      "data": {
+        "name": "novels",
+        "owner": "56d892f19eea865c0536ac4e",
+        "createdAt": "2016-03-04T02:51:52.865Z",
+        "updatedAt": "2016-03-04T02:51:52.865Z",
+        "id": "56d8f8489eea865c0536ac51"
+      }
+    }
+  ```
+
  * GET /book -h [jwt:login返回的token] 返回jwt中user的信息和booklist
+   ```
+   {
+      "status": "ok",
+      "data": {
+        "booklist": [
+          {
+            "name": "sci-fi",
+            "owner": "56d892f19eea865c0536ac4e",
+            "createdAt": "2016-03-04T02:38:08.811Z",
+            "updatedAt": "2016-03-04T02:38:08.811Z",
+            "id": "56d8f5109eea865c0536ac4f"
+          },
+          {
+            "name": "sports",
+            "owner": "56d892f19eea865c0536ac4e",
+            "createdAt": "2016-03-04T02:38:12.905Z",
+            "updatedAt": "2016-03-04T02:38:12.905Z",
+            "id": "56d8f5149eea865c0536ac50"
+          },
+          {
+            "name": "novels",
+            "owner": "56d892f19eea865c0536ac4e",
+            "createdAt": "2016-03-04T02:51:52.865Z",
+            "updatedAt": "2016-03-04T02:51:52.865Z",
+            "id": "56d8f8489eea865c0536ac51"
+          }
+        ],
+        "username": "liang.zhao83@gmail.com",
+        "createdAt": "2016-03-03T19:39:29.006Z",
+        "updatedAt": "2016-03-03T19:39:29.006Z",
+        "id": "56d892f19eea865c0536ac4e"
+      }
+    }
+   ```
  * DELETE /book -d [booklist:booklist] -h [jwt:login返回的token] 为jwt中user移除此booklist
 
- * POST /book/booklist -d [book:book,booklist:booklist] -h [jwt:login返回的token] 将此book添加到此booklist中去
- * GET /book/booklist?id=[booklistid] -h [jwt:login返回的token] 返回该booklist中所有的books
- * DELETE /book/booklist -d [book:book,booklist:booklist] -h [jwt:login返回的token] 将此book此booklist中移去
+ ```
+ {
+  "status": "ok",
+  "data": [
+    {
+      "name": "novels",
+      "owner": "56d892f19eea865c0536ac4e",
+      "createdAt": "2016-03-04T02:51:52.865Z",
+      "updatedAt": "2016-03-04T02:51:52.865Z",
+      "id": "56d8f8489eea865c0536ac51"
+    }
+  ]
+}
+ ```
 
+ * POST /book/booklist -d [book:book,booklist:booklist] -h [jwt:login返回的token] 将此book添加到此booklist中去
+
+ ```
+ {
+   "status": "ok",
+   "data": {
+     "images": {
+       "small": "https://img1.doubanio.com/spic/s28278604.jpg",
+       "large": "https://img1.doubanio.com/lpic/s28278604.jpg",
+       "medium": "https://img1.doubanio.com/mpic/s28278604.jpg"
+     },
+     "alt": "http://book.douban.com/subject/26582822/",
+     "title": "重新定义公司",
+     "author": [
+       "[美]埃里克·施密特"
+     ],
+     "isbn13": "9787508653594",
+     "createdAt": "2016-03-04T03:05:21.412Z",
+     "updatedAt": "2016-03-04T03:05:21.412Z",
+     "id": "56d8fb719eea865c0536ac52"
+   }
+ }
+  ```
+
+ * GET /book/booklist?id=[booklistid] -h [jwt:login返回的token] 返回该booklist中所有的books
+   ```
+   {
+      "status": "ok",
+      "data": {
+        "books": [
+          {
+            "images": {
+              "small": "https://img1.doubanio.com/spic/s28278604.jpg",
+              "large": "https://img1.doubanio.com/lpic/s28278604.jpg",
+              "medium": "https://img1.doubanio.com/mpic/s28278604.jpg"
+            },
+            "alt": "http://book.douban.com/subject/26582822/",
+            "title": "重新定义公司",
+            "author": [
+              "[美]埃里克·施密特"
+            ],
+            "isbn13": "9787508653594",
+            "createdAt": "2016-03-04T03:05:21.412Z",
+            "updatedAt": "2016-03-04T03:05:21.412Z",
+            "id": "56d8fb719eea865c0536ac52"
+          },
+          {
+            "images": {
+              "small": "https://img1.doubanio.com/spic/s8894789.jpg",
+              "large": "https://img1.doubanio.com/lpic/s8894789.jpg",
+              "medium": "https://img1.doubanio.com/mpic/s8894789.jpg"
+            },
+            "alt": "http://book.douban.com/subject/3865371/",
+            "title": "Google将带来什么?",
+            "author": [
+              "杰夫·贾维斯"
+            ],
+            "isbn13": "9787802491502",
+            "createdAt": "2016-03-04T03:07:11.059Z",
+            "updatedAt": "2016-03-04T03:07:11.059Z",
+            "id": "56d8fbdf9eea865c0536ac54"
+          }
+        ],
+        "owner": "56d892f19eea865c0536ac4e",
+        "name": "sports",
+        "createdAt": "2016-03-04T02:38:12.905Z",
+        "updatedAt": "2016-03-04T03:07:11.065Z",
+        "id": "56d8f5149eea865c0536ac50"
+      }
+    }
+   ```
+
+ * DELETE /book/booklist -d [book:book,booklist:booklist] -h [jwt:login返回的token] 将此book此booklist中移去
+  ```
+  {
+    "status": "ok"
+  }
+  ```
 * Auth API
  * GET /auth/check?username=[username] 检查username是否存在 存在返回error,不存在返回ok
  * POST /auth/register -d [userName:用户名(邮箱), password:password] 注册用户(密码在数据库中用bcrypt加密)

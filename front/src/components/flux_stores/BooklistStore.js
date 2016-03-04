@@ -4,6 +4,7 @@ import assign from 'object-assign';
 import Auth from '../utils/auth';
 
 var CHANGE_EVENT = 'change';
+var AUTHFAIL_EVENT = 'authfail';
 
 var booklists = [];
 
@@ -16,12 +17,20 @@ function retrieveBooklists(){
 function processData(response){
   let obj = JSON.parse(response.target.responseText);
   console.log('obj ',obj);
-  booklists = obj.data.booklist;
-  emitChange();
+  if(obj.status == 'ok'){
+    booklists = obj.data.booklist;
+    emitChange();
+  }else{
+    emitAuthfail();
+  }
 }
 
 function emitChange() {
   BooklistStore.emit(CHANGE_EVENT);
+}
+
+function emitAuthfail() {
+  BooklistStore.emit(AUTHFAIL_EVENT);
 }
 
 var BooklistStore = assign({}, EventEmitter.prototype, {
@@ -32,6 +41,14 @@ var BooklistStore = assign({}, EventEmitter.prototype, {
 
   removeChangeListener: function(callback){
     this.removeListener(CHANGE_EVENT, callback);
+  },
+
+  addAuthfailListener: function(callback){
+    this.on(AUTHFAIL_EVENT, callback);
+  },
+
+  removeAuthfailListener: function(callback){
+    this.removeListener(AUTHFAIL_EVENT, callback);
   },
 
   getBooklists: function(){

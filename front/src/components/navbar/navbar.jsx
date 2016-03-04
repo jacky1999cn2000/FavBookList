@@ -19,17 +19,23 @@ let NavBar = React.createClass({
 
   componentDidMount: function(){
     BooklistStore.addChangeListener(this.onBooklistsChange);
+    BooklistStore.addAuthfailListener(this.onAuthFail);
     BooklistActionCreator.retrieveBooklists();
   },
 
   componentWillUnmount: function(){
     BooklistStore.removeChangeListener(this.onBooklistsChange);
+    BooklistStore.removeAuthfailListener(this.onAuthFail);
   },
 
   onBooklistsChange: function(){
     console.log('onBooklistsChange');
     console.log('booklists ',BooklistStore.getBooklists());
     this.setState({booklists: BooklistStore.getBooklists()});
+  },
+
+  onAuthFail: function(){
+    this.logout();
   },
 
   logout: function(){

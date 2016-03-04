@@ -5,6 +5,9 @@ import {browserHistory} from 'react-router';
 import BooklistActionCreator from '../flux_actions/BooklistActionCreator';
 import BooklistStore from '../flux_stores/BooklistStore';
 
+/*
+* BookPanel compoenent will be the controlling view, all states will be managed here
+*/
 let BookPanel = React.createClass({
 
   getInitialState: function(){
@@ -13,12 +16,14 @@ let BookPanel = React.createClass({
     }
   },
 
+  //register for BooklistStore's events
   componentDidMount: function(){
     BooklistStore.addChangeListener(this.onBooklistsChange);
     BooklistStore.addAuthfailListener(this.onAuthFail);
     BooklistActionCreator.retrieveBooklists();
   },
 
+  //unregister for BooklistStore's events
   componentWillUnmount: function(){
     BooklistStore.removeChangeListener(this.onBooklistsChange);
     BooklistStore.removeAuthfailListener(this.onAuthFail);
@@ -30,6 +35,7 @@ let BookPanel = React.createClass({
     this.setState({booklists: BooklistStore.getBooklists()});
   },
 
+  //jwt's expiration is 1 day, in case it expired(typically user should close browser before expiration), just logout
   onAuthFail: function(){
     this.logout();
   },

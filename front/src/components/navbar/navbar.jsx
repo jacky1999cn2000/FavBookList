@@ -15,6 +15,7 @@ let NavBar = React.createClass({
 
 	},
 
+  //build menu items (if no booklists yet, then don't need empty array and divider in the menu)
   booklistsMenuItems: function(booklists){
     let booklistsMenuItems = [];
 

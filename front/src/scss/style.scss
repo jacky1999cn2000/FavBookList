@@ -1,23 +1,18 @@
-// https://github.com/guru-digital/bootswatch-sass
-// To use a theme in your Sass project, structure your imports in this order
-//
-// import the offial bootstrap-sass variables
-// import bootswatch theme variables
-// import offical bootstrap-sass
-// import bootswatch theme additional file
-// E.g - Importing the paper theme:
-    //
-    // @import "bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/variables";
-    // @import "bower_components/bootswatch-sass/paper/variables";
-    // @import "bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/bootstrap";
-    // @import "bower_components/bootswatch-sass/paper/bootswatch-scss/readable/bootswatch";
+//https://github.com/twbs/bootstrap-sass#c-bower
+//https://github.com/thomaspark/bootswatch
 
-@import "bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/variables";
-@import "bower_components/bootswatch-sass/superhero/variables";
-@import "bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap";
-@import "bower_components/bootswatch-sass/superhero/bootswatch";
+// @import "bower_components/bootswatch-scss/superhero/variables";
+// @import "bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap";
+// @import "bower_components/bootswatch-scss/superhero/bootswatch";
 
+body {
+  font-family: fantasy;
+}
 
+.container
+{
+  margin-top: 20px;
+}
 .form-signin
 {
     max-width: 330px;
@@ -82,6 +77,18 @@
     border-radius: 50%;
 }
 
+.logo-img
+{
+    width: 40px;
+    height: 40px;
+    float: left;
+    margin: 0px 5px 15px 15px;
+    display: inline;
+    -moz-border-radius: 50%;
+    -webkit-border-radius: 50%;
+    border-radius: 50%;
+}
+
 .auth-redirect-link
 {
     text-align: center;
@@ -92,13 +99,13 @@
 // kind of weird, but bootswatch superhero didn't define .has-success and .has-error
 .has-success {
   .form-control{
-    border-color: $brand-success;
+    border-color: #5cb85c;
   }
 }
 
 .has-error {
   .form-control{
-    border-color: $brand-danger;
+    border-color: #d9534f;
   }
 }
 

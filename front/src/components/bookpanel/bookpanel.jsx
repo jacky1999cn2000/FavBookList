@@ -1,6 +1,5 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-
+import NavBar from '../navbar/navbar';
 
 let BookPanel = React.createClass({
 
@@ -8,7 +7,7 @@ let BookPanel = React.createClass({
 
     return (
       <div>
-        BOOK PANEL
+        <NavBar/>
       </div>
     );
   }

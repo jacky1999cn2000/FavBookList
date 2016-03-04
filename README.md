@@ -51,6 +51,8 @@
        browserHistory.push('/');
      }).bind(this), 3000);
    ```
+ * [React-Bootstrap](http://react-bootstrap.github.io/getting-started.html)
+
 ---
 
 ### FRONTEND TRIVIA

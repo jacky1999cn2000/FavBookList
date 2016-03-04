@@ -79,14 +79,14 @@ body {
 
 .logo-img
 {
-    width: 40px;
+    width: 60px;
     height: 40px;
     float: left;
-    margin: 0px 5px 15px 15px;
+    margin: 0px 3px 15px 15px;
     display: inline;
-    -moz-border-radius: 50%;
-    -webkit-border-radius: 50%;
-    border-radius: 50%;
+    -moz-border-radius: 10%;
+    -webkit-border-radius: 10%;
+    border-radius: 10%;
 }
 
 .auth-redirect-link

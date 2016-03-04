@@ -6,51 +6,38 @@ import NavDropdown from 'react-bootstrap/lib/NavDropdown';
 import MenuItem from 'react-bootstrap/lib/MenuItem';
 import {Link} from 'react-router';
 import {browserHistory} from 'react-router';
-var BooklistActionCreator = require('../flux_actions/BooklistActionCreator');
-var BooklistStore = require('../flux_stores/BooklistStore');
+
 
 let NavBar = React.createClass({
-
-  getInitialState: function(){
-    return {
-      booklists: BooklistStore.getBooklists()
-    }
-  },
-
-  componentDidMount: function(){
-    BooklistStore.addChangeListener(this.onBooklistsChange);
-    BooklistStore.addAuthfailListener(this.onAuthFail);
-    BooklistActionCreator.retrieveBooklists();
-  },
-
-  componentWillUnmount: function(){
-    BooklistStore.removeChangeListener(this.onBooklistsChange);
-    BooklistStore.removeAuthfailListener(this.onAuthFail);
-  },
-
-  onBooklistsChange: function(){
-    console.log('onBooklistsChange');
-    console.log('booklists ',BooklistStore.getBooklists());
-    this.setState({booklists: BooklistStore.getBooklists()});
-  },
-
-  onAuthFail: function(){
-    this.logout();
-  },
-
-  logout: function(){
-    delete localStorage.token;
-    setTimeout((function(){
-      browserHistory.push('/login');
-    }),1000);
-  },
 
   menuItemHandler: function(item, e) {
 
 
 	},
 
+  booklistsMenuItems: function(booklists){
+    let booklistsMenuItems = [];
+
+    if(booklists.length > 0){
+      booklists.map((item, i) => {
+        let boundMenuItemHandler = this.menuItemHandler.bind(this, item);
+        let menuItem = <MenuItem key={item.id}>{item.name}</MenuItem>;
+        booklistsMenuItems.push(menuItem)
+      });
+      booklistsMenuItems.push(<MenuItem key={0} divider />);
+      booklistsMenuItems.push(<MenuItem key={1}>Create anoter BookList</MenuItem>);
+    }else{
+      booklistsMenuItems.push(<MenuItem key={1}>Create your first BookList now!</MenuItem>);
+    }
+
+    return booklistsMenuItems;
+  },
+
+
   render: function(){
+    console.log('NavBar render');
+
+    let booklistsMenuItems = this.booklistsMenuItems(this.props.booklists);
 
     return (
       <Navbar inverse>
@@ -66,20 +53,11 @@ let NavBar = React.createClass({
         <Navbar.Collapse>
           <Nav>
             <NavDropdown title="Select a BookList" id="dropdown-menu">
-              {
-                this.state.booklists.map((item, i) => {
-                  console.log('item ',item);
-                  let boundMenuItemHandler = this.menuItemHandler.bind(this, item);
-                  return (
-                    <MenuItem key={item.id}>{item.name}</MenuItem>
-                  )
-                })
-              }
-
+              {booklistsMenuItems}
             </NavDropdown>
           </Nav>
           <Nav pullRight>
-            <NavItem onClick={this.logout}>Log Out</NavItem>
+            <NavItem onClick={this.props.logout}>Log Out</NavItem>
           </Nav>
         </Navbar.Collapse>
 

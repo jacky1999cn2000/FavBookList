@@ -119,12 +119,13 @@ let Register = React.createClass({
   register: function(event){
     event.preventDefault();
 
-    let data = JSON.stringify({
+    let options = {};
+    options.data = JSON.stringify({
       'username': this.state.register.email,
       'password': this.state.register.password
     });
 
-    Auth.request(Auth.url + '/auth/register', this.registerCB, data);
+    Auth.request(Auth.url + '/auth/register', this.registerCB, 'POST', options);
   },
 
   registerCB: function(response){

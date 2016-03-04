@@ -45,12 +45,13 @@ let Login = React.createClass({
   login: function(event){
     event.preventDefault();
 
-    let data = JSON.stringify({
+    let options = {};
+    options.data = JSON.stringify({
       'username': this.state.login.email,
       'password': this.state.login.password
     });
 
-    Auth.request(Auth.url + '/auth/login', this.loginCB, data);
+    Auth.request(Auth.url + '/auth/login', this.loginCB, 'POST', options);
   },
 
   loginCB: function(response){

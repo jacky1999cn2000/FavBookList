@@ -258,7 +258,7 @@
  * [programatically naviate out of compoments](https://github.com/reactjs/react-router/blob/master/docs/guides/NavigatingOutsideOfComponents.md)
  * [browserHistory使用时配置server - 部署前修改](https://github.com/reactjs/react-router/blob/master/docs/guides/Histories.md)
  * [setTimeout scope的绑定 (closure or bind())](http://stackoverflow.com/questions/1728563/changing-the-scope-of-an-anonymous-function-on-a-settimeout-causes-a-weird-warni)
-   ``` 
+   ```
      setTimeout((function(){
        this.setState({messages:this.state.messages});
        browserHistory.push('/');
@@ -349,4 +349,4 @@
  * [如果碰到"heroku does not appear to be a git repository",意味着尚未把heroku加到git remote中去](https://devcenter.heroku.com/articles/git)
  * [如果想移除某个git remote](https://help.github.com/articles/removing-a-remote/)
  * [favbooklist项目把front和sails-app放在一起了，为了depoy sails-app到heroku,需要从github上git clone下来整个项目到一个新地方，然后把sails-app摘出来，再在sails-app里面走这套流程](http://vort3x.me/sailsjs-heroku/)
- * 因为上述的原因^,当update项目的时候，先从heroku上“git clone https://git.heroku.com/favbooklist.git”,login heroku,然后添加heroku remote(heroku git:remote -a favbooklist),然后把旧code从sails-app文件夹里删除，把新的粘贴进去，然后git add, git push
+ * [当update项目的时候](https://dashboard.heroku.com/apps/favbooklist/deploy/heroku-git)

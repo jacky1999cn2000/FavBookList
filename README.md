@@ -308,6 +308,7 @@
        }
      }
      ```
+  * [carousel 图片位置修正](http://stackoverflow.com/questions/10591422/bootstrap-carousel-image-doesnt-align-properly)
 
 ---
 

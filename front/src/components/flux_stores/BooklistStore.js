@@ -10,7 +10,7 @@ var booklists = [];
 
 function retrieveBooklists(){
   let options = {};
-  options.jwt = localStorage.token;
+  options.jwt = localStorage.bookclubtoken;
   Auth.request(Auth.url + '/book', processData, 'GET', options);
 }
 

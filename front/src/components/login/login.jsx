@@ -63,7 +63,7 @@ let Login = React.createClass({
         this.state.messages = [obj.errorMessage];
         this.setState({messages:this.state.messages});
       }else{
-        localStorage.token = obj.token;
+        localStorage.bookclubtoken = obj.token;
         this.state.messageType = 'info';
         this.state.messages = ['Login Succeed! Redirecting to main page now.'];
         this.setState({messageType:this.state.messageType,messages:this.state.messages});

@@ -13,6 +13,20 @@ body {
 {
   margin-top: 20px;
 }
+.booklist-info
+{
+  margin: 5px 0px 30px 20px;
+  display:block;
+}
+.hide-bullets {
+    list-style:none;
+    margin-left: -40px;
+    margin-top:20px;
+}
+.carousel-inner>.item>img, .carousel-inner>.item>a>img {
+    margin: 0 auto;
+}
+
 .form-signin
 {
     max-width: 330px;

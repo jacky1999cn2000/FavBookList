@@ -1,7 +1,11 @@
 import React from 'react';
 import NavBar from '../navbar/navbar';
+import WelcomePage from '../welcomepage/welcomepage';
 import BookBrowser from '../bookbrowser/bookbrowser';
+import BookCollection from '../bookcollection/bookcollection';
+
 import {browserHistory} from 'react-router';
+
 import BooklistActionCreator from '../flux_actions/BooklistActionCreator';
 import BooklistStore from '../flux_stores/BooklistStore';
 
@@ -12,7 +16,8 @@ let BookPanel = React.createClass({
 
   getInitialState: function(){
     return {
-      booklists: BooklistStore.getBooklists()
+      booklists: BooklistStore.getBooklists(),
+      currentBKL: {}, //currently selected booklist
     }
   },
 
@@ -41,26 +46,42 @@ let BookPanel = React.createClass({
   },
 
   logout: function(){
-    delete localStorage.token;
+    delete localStorage.bookclubtoken;
     setTimeout((function(){
       browserHistory.push('/login');
     }),1000);
   },
 
+  setCurrentBKL: function(item){
+    this.setState({currentBKL:item});
+  },
+
+  getBookPanel: function(){
+
+    return (
+      <div className="row">
+        <div className="col-md-7">
+          <div>
+            <BookBrowser currentBKL={this.state.currentBKL}/>
+          </div>
+        </div>
+
+        <div className="col-md-5">
+          <BookCollection/>
+        </div>
+      </div>
+    );
+  },
+
   render: function(){
-    console.log('BookPanel render');
+
+    let bookPanel = typeof this.state.currentBKL.name == "undefined" ? <WelcomePage/> : this.getBookPanel();
+
     return (
       <div>
-        <NavBar booklists={this.state.booklists} logout={this.logout}/>
+        <NavBar booklists={this.state.booklists} logout={this.logout} setCurrentBKL={this.setCurrentBKL}/>
         <div className="container">
-          <div className="row">
-            <div className="col-md-7">
-            <BookBrowser/>
-            </div>
-            <div className="col-md-5">
-            xxx
-            </div>
-          </div>
+            {bookPanel}
         </div>
       </div>
     );

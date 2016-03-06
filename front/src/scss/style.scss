@@ -23,6 +23,32 @@ body {
     margin-left: -40px;
     margin-top:20px;
 }
+.hide-bullets>li>a>img{
+  height: 112px;
+  width: 89px;
+}
+.collection{
+  height: 443px;
+  width: 488px;
+}
+.slide-leave {
+  opacity: 1;
+}
+.slide-leave.slide-leave-active {
+  opacity: 0;
+  transition: opacity .4s ease-in;
+}
+.slide-enter {
+  opacity: 0;
+}
+.slide-enter.slide-enter-active {
+  opacity: 1;
+  /* Delay the enter animation until the leave completes */
+  transition: opacity .4s ease-in .6s;
+}
+.slide-height {
+  transition: height .6s ease-in-out;
+}
 .carousel-inner>.item>img, .carousel-inner>.item>a>img {
     margin: 0 auto;
 }

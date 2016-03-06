@@ -12,8 +12,7 @@ let NavBar = React.createClass({
 
   menuItemHandler: function(item, e) {
       e.preventDefault();
-      console.log('item ',item);
-      this.props.setCurrentBKL(item);
+      this.props.selectBooklist(item);
 	},
 
   //build menu items (if no booklists yet, then don't need empty array and divider in the menu)
@@ -37,8 +36,7 @@ let NavBar = React.createClass({
 
 
   render: function(){
-    console.log('NavBar render');
-
+    
     let booklistsMenuItems = this.booklistsMenuItems(this.props.booklists);
 
     return (

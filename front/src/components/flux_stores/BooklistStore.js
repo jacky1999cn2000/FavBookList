@@ -62,7 +62,7 @@ function handleAction(action){
       retrieveBooklists();
       break;
     default:
-      console.log('Something wrong...');
+      console.log('This is BooklistStore, and passed action is not my concern: ',action);
   }
 }
 

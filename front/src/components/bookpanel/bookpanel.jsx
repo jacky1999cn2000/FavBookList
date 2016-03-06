@@ -7,7 +7,9 @@ import BookCollection from '../bookcollection/bookcollection';
 import {browserHistory} from 'react-router';
 
 import BooklistActionCreator from '../flux_actions/BooklistActionCreator';
+import BookActionCreator from '../flux_actions/BookActionCreator';
 import BooklistStore from '../flux_stores/BooklistStore';
+import BookStore from '../flux_stores/BookStore';
 
 /*
 * BookPanel compoenent will be the controlling view, all states will be managed here
@@ -16,33 +18,47 @@ let BookPanel = React.createClass({
 
   getInitialState: function(){
     return {
-      booklists: BooklistStore.getBooklists(),
+      booklists: BooklistStore.getBooklists(), //booklists for current user
+      books: BookStore.getBooks(), //books for current booklist (currentBKL)
+      panelName: 'WelcomePage', //control which panel to display
       currentBKL: {}, //currently selected booklist
     }
   },
 
-  //register for BooklistStore's events
   componentDidMount: function(){
-    BooklistStore.addChangeListener(this.onBooklistsChange);
-    BooklistStore.addAuthfailListener(this.onAuthFail);
+    //register BooklistStore & BookStore
+    BooklistStore.addChangeListener(this.onBooklistChange);
+    BooklistStore.addAuthfailListener(this.onBooklistFail);
+    BookStore.addChangeListener(this.onBookChange);
+    BookStore.addFailListener(this.onBookFail);
+
+    //fire action to retrieve all booklists
     BooklistActionCreator.retrieveBooklists();
   },
 
-  //unregister for BooklistStore's events
   componentWillUnmount: function(){
+    //unregister BooklistStore & BookStore
     BooklistStore.removeChangeListener(this.onBooklistsChange);
-    BooklistStore.removeAuthfailListener(this.onAuthFail);
+    BooklistStore.removeAuthfailListener(this.onBooklistFail);
+    BookStore.removeChangeListener(this.onBookChange);
+    BookStore.removeFailListener(this.onBookFail);
   },
 
-  onBooklistsChange: function(){
-    console.log('onBooklistsChange');
-    console.log('booklists ',BooklistStore.getBooklists());
+  onBooklistChange: function(){
     this.setState({booklists: BooklistStore.getBooklists()});
   },
 
   //jwt's expiration is 1 day, in case it expired(typically user should close browser before expiration), just logout
-  onAuthFail: function(){
+  onBooklistFail: function(){
     this.logout();
+  },
+
+  onBookChange: function(){
+    this.setState({books: BookStore.getBooks()});
+  },
+
+  onBookFail: function(){
+    console.error('onBookFail: Something Wrong...');
   },
 
   logout: function(){
@@ -52,36 +68,41 @@ let BookPanel = React.createClass({
     }),1000);
   },
 
-  setCurrentBKL: function(item){
-    this.setState({currentBKL:item});
+  selectBooklist: function(booklist){
+    this.setState({currentBKL:booklist,panelName:'BooksView'});
+
+    //fire action to retrieve all books for given booklist
+    BookActionCreator.retrieveBooks(booklist.id);
   },
 
-  getBookPanel: function(){
+  getBookPanel: function(panelName){
 
-    return (
-      <div className="row">
-        <div className="col-md-7">
-          <div>
-            <BookBrowser currentBKL={this.state.currentBKL}/>
+    switch (panelName) {
+      case 'BooksView':
+        return (
+          <div className="row">
+            <div className="col-md-7">
+              <BookBrowser currentBKL={this.state.currentBKL}/>
+            </div>
+            <div className="col-md-5">
+              <BookCollection books={this.state.books}/>
+            </div>
           </div>
-        </div>
-
-        <div className="col-md-5">
-          <BookCollection/>
-        </div>
-      </div>
-    );
+        );
+      default:
+        return <WelcomePage/>;
+    }
   },
 
   render: function(){
 
-    let bookPanel = typeof this.state.currentBKL.name == "undefined" ? <WelcomePage/> : this.getBookPanel();
+    let panelContent = this.getBookPanel(this.state.panelName);
 
     return (
       <div>
-        <NavBar booklists={this.state.booklists} logout={this.logout} setCurrentBKL={this.setCurrentBKL}/>
+        <NavBar booklists={this.state.booklists} logout={this.logout} selectBooklist={this.selectBooklist}/>
         <div className="container">
-            {bookPanel}
+            {panelContent}
         </div>
       </div>
     );

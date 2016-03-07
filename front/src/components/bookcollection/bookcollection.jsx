@@ -13,30 +13,25 @@ let BookCollection = React.createClass({
     };
   },
 
-  bookItemHandler: function(){
-
+  bookItemHandler: function(item, i, e){
+    e.preventDefault();
+    console.log('bookItemHandler');
+    console.log('i ',i);
+    console.log('item ',item);
+    $('#book-carousel').carousel(0);
   },
 
   bookItems: function(books){
     let bookItems = [];
 
-    if(books.length > 0){
-      books.map((item, i) => {
+    books.map((item, i) => {
 
-        if(i < this.state.currentPage*12 && i >= (this.state.currentPage-1)*12){
-          //let boundBookItemHandler = this.bookItemHandler.bind(this, i);
-          let bookItem = <BookCollectionItem key={item.id} item={item}/>
-          bookItems.push(bookItem)
-        }
-      });
-    }else{
-      // let bookItem = (
-      //   <li className="col-sm-3">
-      //       <a className="thumbnail" ><img src="https://img3.doubanio.com/mpic/s5860151.jpg"/></a>
-      //   </li>
-      // );
-      // bookItems.push(bookItem)
-    }
+      if(i < this.state.currentPage*12 && i >= (this.state.currentPage-1)*12){
+        let boundBookItemHandler = this.bookItemHandler.bind(this, item, i);
+        let bookItem = <BookCollectionItem key={item.id} item={item} onClick={boundBookItemHandler}/>
+        bookItems.push(bookItem)
+      }
+    });
 
     return bookItems;
   },
@@ -59,7 +54,7 @@ let BookCollection = React.createClass({
 
     return (
       <div className="hidden-xs hidden-sm">
-        <ReactCSSTransitionReplace transitionName="slide" transitionAppearTimeout={500} transitionEnterTimeout={500} transitionLeaveTimeout={500}>
+        <ReactCSSTransitionReplace transitionName="slide" transitionAppear={true} transitionAppearTimeout={500}transitionAppearTimeout={500} transitionEnterTimeout={500} transitionLeaveTimeout={500}>
           <div key={this.state.currentPage} className="collection">
             <ul className="hide-bullets">
               {bookItems}

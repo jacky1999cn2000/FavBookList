@@ -1,7 +1,8 @@
 import React from 'react';
 import NavBar from '../navbar/navbar';
 import WelcomePage from '../welcomepage/welcomepage';
-import BookBrowser from '../bookbrowser/bookbrowser';
+import NobooksPage from '../nobookspage/nobookspage';
+import BookCarousel from '../bookcarousel/bookcarousel';
 import BookCollection from '../bookcollection/bookcollection';
 
 import {browserHistory} from 'react-router';
@@ -76,19 +77,24 @@ let BookPanel = React.createClass({
   },
 
   getBookPanel: function(panelName){
+    if(panelName == 'BooksView' && this.state.books.length == 0){
+      panelName = 'NoBooksView';
+    }
 
     switch (panelName) {
       case 'BooksView':
         return (
           <div className="row">
             <div className="col-md-7">
-              <BookBrowser currentBKL={this.state.currentBKL}/>
+              <BookCarousel currentBKL={this.state.currentBKL} books={this.state.books}/>
             </div>
             <div className="col-md-5">
               <BookCollection books={this.state.books}/>
             </div>
           </div>
         );
+      case 'NoBooksView':
+        return <NobooksPage currentBKL={this.state.currentBKL}/>;
       default:
         return <WelcomePage/>;
     }

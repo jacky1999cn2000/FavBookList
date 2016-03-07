@@ -23,7 +23,11 @@ body {
     margin-left: -40px;
     margin-top:20px;
 }
-.hide-bullets>li>a>img{
+// .hide-bullets>li>a>img{
+//   height: 112px;
+//   width: 89px;
+// }
+.hide-bullets>li>div{
   height: 112px;
   width: 89px;
 }
@@ -49,8 +53,20 @@ body {
 .slide-height {
   transition: height .6s ease-in-out;
 }
+.carousel-inner{
+  height: 420px;
+  width: 650px;
+}
 .carousel-inner>.item>img, .carousel-inner>.item>a>img {
     margin: 0 auto;
+}
+.pointer {
+	cursor:pointer;
+}
+.hover{
+  &:hover{
+    background-color: red;
+  }
 }
 
 .form-signin
